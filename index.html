@@ -11,7 +11,6 @@
 <body>
 
     <nav class="navbar">
-        
         <div class="logo-container">
             <div class="logo-icon">
                 <span>B</span>
@@ -88,10 +87,11 @@
 
     <section class="contact" id="contact">
         <h2 class="section-title serif-bold">𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐔𝐒</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea rows="5" placeholder="How can we help?" required></textarea>
+        
+        <form name="contact" method="POST" data-netlify="true">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="How can we help?" required></textarea>
             <button type="submit">𝐒𝐞𝐧𝐝 𝐌𝐞𝐬𝐬𝐚𝐠𝐞</button>
         </form>
     </section>
