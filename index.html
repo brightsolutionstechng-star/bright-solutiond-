@@ -1,293 +1,849 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDS | Bright Digital Solutions – Web Dev, Solar, CCTV Nigeria</title>
-    <meta name="description" content="Professional Web Development, Software Engineering, Solar Installations & CCTV Security Solutions in Awka, Anambra State.">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>BDS | Bright Digital Solutions Nigeria</title>
+
+<meta name="description"
+    content="Bright Digital Solutions (BDS) offers professional Web Development, Software Engineering, Solar Installation & CCTV Security services in Awka, Anambra State, Nigeria." />
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        scroll-behavior:smooth;
+    }
+
+    :root{
+        --bg:#050505;
+        --card:#101010;
+        --glass:rgba(255,255,255,0.06);
+        --blue:#0d6efd;
+        --cyan:#00c3ff;
+        --white:#ffffff;
+        --text:#cfcfcf;
+    }
+
+    body{
+        font-family:Arial, Helvetica, sans-serif;
+        background:var(--bg);
+        color:var(--white);
+        overflow-x:hidden;
+    }
+
+    body::before{
+        content:"";
+        position:fixed;
+        width:500px;
+        height:500px;
+        background:radial-gradient(circle, rgba(0,195,255,0.15), transparent 70%);
+        top:-200px;
+        right:-100px;
+        z-index:-1;
+    }
+
+    body::after{
+        content:"";
+        position:fixed;
+        width:450px;
+        height:450px;
+        background:radial-gradient(circle, rgba(13,110,253,0.12), transparent 70%);
+        bottom:-150px;
+        left:-100px;
+        z-index:-1;
+    }
+
+    /* CUSTOM SCROLLBAR */
+    ::-webkit-scrollbar{
+        width:10px;
+    }
+
+    ::-webkit-scrollbar-track{
+        background:#0b0b0b;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background:linear-gradient(var(--blue),var(--cyan));
+        border-radius:10px;
+    }
+
+    /* NAVBAR */
+    .navbar{
+        position:fixed;
+        top:0;
+        width:100%;
+        z-index:1000;
+        padding:16px 7%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        backdrop-filter:blur(14px);
+        background:rgba(5,5,5,0.7);
+        border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+
+    .logo{
+        display:flex;
+        align-items:center;
+        gap:12px;
+    }
+
+    .logo-icon{
+        width:50px;
+        height:50px;
+        border-radius:15px;
+        background:linear-gradient(135deg,var(--blue),var(--cyan));
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-weight:bold;
+        font-size:22px;
+        color:white;
+        box-shadow:0 0 25px rgba(0,195,255,0.4);
+    }
+
+    .logo h2{
+        font-size:1.2rem;
+        background:linear-gradient(to right,var(--cyan),white);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+    }
+
+    .logo span{
+        color:#bbb;
+        font-size:0.8rem;
+    }
+
+    .nav-links{
+        display:flex;
+        gap:28px;
+    }
+
+    .nav-links a{
+        color:white;
+        text-decoration:none;
+        transition:0.3s;
+        font-size:0.95rem;
+    }
+
+    .nav-links a:hover{
+        color:var(--cyan);
+    }
+
+    .mobile-menu{
+        display:none;
+        flex-direction:column;
+        gap:5px;
+        cursor:pointer;
+    }
+
+    .mobile-menu span{
+        width:26px;
+        height:3px;
+        background:white;
+        border-radius:10px;
+    }
+
+    /* HERO */
+    .hero{
+        min-height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding:120px 7% 80px;
+        position:relative;
+        overflow:hidden;
+    }
+
+    .hero::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:
+        linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.8)),
+        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
+        background-size:cover;
+        background-position:center;
+        z-index:-2;
+    }
+
+    .hero-content{
+        max-width:900px;
+    }
+
+    .badge{
+        display:inline-block;
+        padding:10px 18px;
+        background:rgba(255,255,255,0.08);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:50px;
+        margin-bottom:25px;
+        color:var(--cyan);
+        font-size:0.9rem;
+    }
+
+    .hero h1{
+        font-size:4rem;
+        line-height:1.1;
+        margin-bottom:25px;
+        font-weight:800;
+    }
+
+    .gradient{
+        background:linear-gradient(to right,var(--cyan),white);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+    }
+
+    .hero p{
+        color:var(--text);
+        line-height:1.8;
+        max-width:750px;
+        margin:auto;
+        font-size:1.08rem;
+    }
+
+    .hero-buttons{
+        margin-top:40px;
+        display:flex;
+        gap:18px;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .btn{
+        padding:15px 28px;
+        border-radius:50px;
+        text-decoration:none;
+        transition:0.35s;
+        font-weight:bold;
+    }
+
+    .btn-primary{
+        background:linear-gradient(135deg,var(--blue),var(--cyan));
+        color:white;
+        box-shadow:0 0 30px rgba(0,195,255,0.35);
+    }
+
+    .btn-primary:hover{
+        transform:translateY(-5px);
+    }
+
+    .btn-secondary{
+        border:1px solid rgba(255,255,255,0.15);
+        color:white;
+        background:rgba(255,255,255,0.04);
+    }
+
+    .btn-secondary:hover{
+        background:rgba(255,255,255,0.1);
+    }
+
+    section{
+        padding:90px 7%;
+    }
+
+    .section-title{
+        text-align:center;
+        font-size:2.6rem;
+        margin-bottom:60px;
+        background:linear-gradient(to right,var(--cyan),white);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+    }
+
+    /* SERVICES */
+    .services-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:28px;
+    }
+
+    .card{
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:24px;
+        overflow:hidden;
+        transition:0.4s;
+        backdrop-filter:blur(12px);
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    .card.show{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    .card:hover{
+        transform:translateY(-12px);
+        box-shadow:0 0 35px rgba(0,195,255,0.18);
+    }
+
+    .card img{
+        width:100%;
+        height:240px;
+        object-fit:cover;
+    }
+
+    .card-content{
+        padding:25px;
+    }
+
+    .card h3{
+        margin-bottom:15px;
+        color:var(--cyan);
+    }
+
+    .card p{
+        color:var(--text);
+        line-height:1.7;
+    }
+
+    /* STATS */
+    .stats{
+        background:linear-gradient(135deg,#0b0b0b,#111);
+    }
+
+    .stats-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+        gap:25px;
+    }
+
+    .stat{
+        text-align:center;
+        padding:40px 20px;
+        border-radius:22px;
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat h2{
+        font-size:3rem;
+        margin-bottom:10px;
+        color:var(--cyan);
+    }
+
+    .stat p{
+        color:#ccc;
+    }
+
+    /* GALLERY */
+    .gallery-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:24px;
+    }
+
+    .gallery-item{
+        position:relative;
+        overflow:hidden;
+        border-radius:24px;
+        opacity:0;
+        transform:translateY(40px);
+        transition:0.5s;
+    }
+
+    .gallery-item.show{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    .gallery-item img{
+        width:100%;
+        height:260px;
+        object-fit:cover;
+        transition:0.5s;
+    }
+
+    .gallery-item:hover img{
+        transform:scale(1.08);
+    }
+
+    .gallery-overlay{
+        position:absolute;
+        bottom:0;
+        width:100%;
+        padding:18px;
+        background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);
+        color:white;
+        font-weight:bold;
+    }
+
+    /* CONTACT */
+    .contact-wrapper{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+        gap:35px;
+        align-items:start;
+    }
+
+    .contact-info{
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:24px;
+        padding:35px;
+    }
+
+    .contact-info h3{
+        margin-bottom:25px;
+        color:var(--cyan);
+    }
+
+    .contact-info p{
+        margin-bottom:18px;
+        color:var(--text);
+        line-height:1.7;
+    }
+
+    .contact-form{
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:24px;
+        padding:35px;
+    }
+
+    .contact-form input,
+    .contact-form textarea{
+        width:100%;
+        padding:16px;
+        margin-bottom:18px;
+        border:none;
+        outline:none;
+        border-radius:14px;
+        background:#121212;
+        color:white;
+        border:1px solid rgba(255,255,255,0.06);
+    }
+
+    .contact-form button{
+        width:100%;
+        border:none;
+        padding:16px;
+        border-radius:14px;
+        cursor:pointer;
+        color:white;
+        font-weight:bold;
+        background:linear-gradient(135deg,var(--blue),var(--cyan));
+        transition:0.3s;
+    }
+
+    .contact-form button:hover{
+        transform:translateY(-3px);
+    }
+
+    .success-message{
+        display:none;
+        background:rgba(0,195,255,0.12);
+        border:1px solid rgba(0,195,255,0.25);
+        color:white;
+        padding:20px;
+        border-radius:18px;
+        margin-bottom:20px;
+    }
+
+    /* FOOTER */
+    footer{
+        background:#030303;
+        padding:50px 7% 30px;
+        border-top:1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+        gap:30px;
+    }
+
+    footer h3{
+        margin-bottom:18px;
+        color:var(--cyan);
+    }
+
+    footer p,
+    footer a{
+        color:#aaa;
+        line-height:1.8;
+        text-decoration:none;
+    }
+
+    footer a:hover{
+        color:var(--cyan);
+    }
+
+    .footer-bottom{
+        margin-top:40px;
+        padding-top:20px;
+        border-top:1px solid rgba(255,255,255,0.08);
+        text-align:center;
+        color:#777;
+    }
+
+    /* BACK TO TOP */
+    #backToTop{
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        width:50px;
+        height:50px;
+        border:none;
+        border-radius:50%;
+        background:linear-gradient(135deg,var(--blue),var(--cyan));
+        color:white;
+        font-size:20px;
+        cursor:pointer;
+        display:none;
+        z-index:1000;
+        box-shadow:0 0 25px rgba(0,195,255,0.4);
+    }
+
+    /* MOBILE */
+    @media(max-width:900px){
+
+        .nav-links{
+            position:absolute;
+            top:80px;
+            right:7%;
+            flex-direction:column;
+            background:#0d0d0d;
+            width:220px;
+            padding:25px;
+            border-radius:18px;
+            display:none;
+        }
+
+        .nav-links.active{
+            display:flex;
+        }
+
+        .mobile-menu{
+            display:flex;
+        }
+
+        .hero h1{
+            font-size:2.5rem;
+        }
+    }
+
+    @media(max-width:600px){
+        .hero h1{
+            font-size:2rem;
+        }
+
+        .section-title{
+            font-size:2rem;
+        }
+    }
+</style>
 </head>
 
 <body>
 
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+<!-- BACK TO TOP -->
+<button id="backToTop">↑</button>
 
-    <nav class="navbar">
-        <div class="logo-container">
-            <div class="logo-icon">
-                <span class="logo-icon-inner">B</span>
-                <div class="logo-glow"></div>
-            </div>
-            <div class="logo-text">
-                <h2>B<span class="logo-dot">D</span><span class="logo-dot-alt">S</span></h2>
-                <span class="logo-subtitle">Bright Digital Solutions</span>
-            </div>
-        </div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#stats">Impact</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="mobile-menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-icon">BDS</div>
 
-    <header id="home">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-badge fade-in-up">🇳🇬 Trusted Since 2020 | Nigeria</div>
-            <h1 class="fade-in-up delay-1">BRIDGING DIGITAL INNOVATION<br>& PHYSICAL SECURITY</h1>
-            <p class="fade-in-up delay-2">Professional Web Development, Software Engineering, Solar Installations & CCTV Security Solutions.</p>
-            <div class="hero-buttons fade-in-up delay-3">
-                <a href="https://wa.me/2347072980690" class="primary-btn">📞 Get Free Quote</a>
-                <a href="#services" class="secondary-btn">Explore Services →</a>
-            </div>
+        <div>
+            <h2>Bright Digital Solutions</h2>
+            <span>Innovation & Security</span>
         </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-mouse"></div>
+    </div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#stats">Impact</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🇳🇬 Trusted Nigerian Tech & Security Company Since 2020
         </div>
-    </header>
 
-    <section class="clients">
-        <div class="clients-container">
-            <p class="clients-label">Trusted by businesses across Nigeria</p>
-            <div class="clients-grid">
-                <span>🏢 Lagos</span><span>⚡ Abuja</span><span>🔒 Port Harcourt</span><span>☀️ Awka</span><span>💻 Enugu</span>
-            </div>
+        <h1>
+            <span class="gradient">BRIDGING DIGITAL INNOVATION</span>
+            <br>
+            & PHYSICAL SECURITY
+        </h1>
+
+        <p>
+            Bright Digital Solutions (BDS) delivers modern web development,
+            software engineering, solar energy systems, and CCTV security
+            solutions for homes and businesses across Nigeria.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="https://wa.me/2347072980690" target="_blank" class="btn btn-primary">
+                📞 Chat on WhatsApp
+            </a>
+
+            <a href="#services" class="btn btn-secondary">
+                Explore Services →
+            </a>
         </div>
-    </section>
 
-    <!-- SERVICES SECTION - ALL IMAGES ARE SPECIFIC AND RELEVANT -->
-    <section class="services" id="services">
-        <h2 class="section-title">OUR SERVICES</h2>
-        <div class="service-grid">
+    </div>
+</section>
 
-            <!-- SERVICE 1: WEB DEVELOPMENT - Computer showing code -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Computer screen displaying HTML code for website development">
-                    <div class="card-overlay"></div>
-                </div>
+<!-- SERVICES -->
+<section id="services">
+
+    <h2 class="section-title">Our Services</h2>
+
+    <div class="services-grid">
+
+        <!-- WEB DEVELOPMENT -->
+        <div class="card fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop"
+                alt="Laptop showing professional website design on screen">
+
+            <div class="card-content">
                 <h3>💻 Web Development</h3>
-                <p>Custom websites, e-commerce platforms, and web applications built with modern technologies.</p>
-            </div>
 
-            <!-- SERVICE 2: SOFTWARE ENGINEERING - Laptop with code on screen -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Laptop screen showing software code and programming interface">
-                    <div class="card-overlay"></div>
-                </div>
+                <p>
+                    Professional business websites, landing pages,
+                    e-commerce stores and responsive web platforms built
+                    with modern technologies and optimized for performance.
+                </p>
+            </div>
+        </div>
+
+        <!-- SOFTWARE ENGINEERING -->
+        <div class="card fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop"
+                alt="Computer monitor displaying colorful programming code">
+
+            <div class="card-content">
                 <h3>⚙️ Software Engineering</h3>
-                <p>Custom software solutions, desktop and mobile applications for business automation.</p>
-            </div>
 
-            <!-- SERVICE 3: SOLAR INSTALLATION - Rooftop with solar panels -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.pexels.com/photos/159397/solar-panels-nature-sun-energy-159397.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Solar panels installed on a residential rooftop under bright sun">
-                    <div class="card-overlay"></div>
-                </div>
+                <p>
+                    Custom software systems, automation tools,
+                    dashboards and scalable applications tailored
+                    for businesses and organizations.
+                </p>
+            </div>
+        </div>
+
+        <!-- SOLAR -->
+        <div class="card fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop"
+                alt="Solar panels installed on rooftop under sunlight">
+
+            <div class="card-content">
                 <h3>☀️ Solar Installation</h3>
-                <p>Complete solar panel systems for homes and businesses. Save money with renewable energy.</p>
-            </div>
 
-            <!-- SERVICE 4: CCTV SECURITY - Actual CCTV camera hardware -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="https://images.pexels.com/photos/258293/pexels-photo-258293.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                        alt="Close up of a professional CCTV security camera on ceiling">
-                    <div class="card-overlay"></div>
-                </div>
+                <p>
+                    Residential and commercial solar energy solutions,
+                    inverter systems and professional rooftop solar
+                    installations for uninterrupted power supply.
+                </p>
+            </div>
+        </div>
+
+        <!-- CCTV -->
+        <div class="card fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1200&auto=format&fit=crop"
+                alt="Physical CCTV security camera mounted on ceiling">
+
+            <div class="card-content">
                 <h3>📹 CCTV Security</h3>
-                <p>Professional CCTV cameras, 24/7 surveillance systems for total property protection.</p>
-            </div>
 
-        </div>
-    </section>
-
-    <!-- STATS SECTION -->
-    <section class="stats" id="stats">
-        <div class="stats-container">
-            <div class="stat-item"><div class="stat-number" data-target="150">0</div><div class="stat-label">Projects Completed</div></div>
-            <div class="stat-item"><div class="stat-number" data-target="98">0</div><div class="stat-label">Happy Clients</div></div>
-            <div class="stat-item"><div class="stat-number" data-target="24">0</div><div class="stat-label">Expert Team</div></div>
-            <div class="stat-item"><div class="stat-number" data-target="7">0</div><div class="stat-label">Years Experience</div></div>
-        </div>
-    </section>
-
-    <!-- PROJECTS GALLERY - DETAILED, RELEVANT IMAGES -->
-    <section class="gallery" id="projects">
-        <h2 class="section-title">OUR PROJECTS</h2>
-        <div class="gallery-grid">
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Person typing code on laptop">
-                <div class="gallery-caption">💻 E-commerce Website Development</div>
-            </div>
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Software development in progress">
-                <div class="gallery-caption">⚙️ Inventory Management Software</div>
-            </div>
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/6478228/pexels-photo-6478228.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Solar panels on a building roof">
-                <div class="gallery-caption">☀️ 10kW Solar Installation - Lagos Office</div>
-            </div>
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/258293/pexels-photo-258293.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="CCTV camera mounted on wall">
-                <div class="gallery-caption">📹 16-Channel CCTV System - Awka Plaza</div>
-            </div>
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/159397/solar-panels-nature-sun-energy-159397.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Solar panels on rooftop">
-                <div class="gallery-caption">☀️ Residential Solar - Enugu Home</div>
-            </div>
-
-            <div class="gallery-item">
-                <img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                    alt="Computer code on screen">
-                <div class="gallery-caption">💻 School Management System</div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="contact" id="contact">
-        <h2 class="section-title">CONTACT US</h2>
-        <div id="form-success" class="form-success" style="display: none;">
-            <div class="success-icon">✓</div>
-            <h3>Message Sent Successfully!</h3>
-            <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
-        </div>
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true#contact" id="contact-form">
-            <input type="hidden" name="form-name" value="contact">
-            <p hidden><input name="bot-field"></p>
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="6" placeholder="How can we help you?" required></textarea>
-            <button type="submit">Send Message →</button>
-        </form>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <h3>BRIGHT DIGITAL <span>SOLUTIONS</span></h3>
-                <p>Innovation Meets Security | Nigeria</p>
-                <div class="social-links">
-                    <a href="https://wa.me/2347072980690" target="_blank">📱 WhatsApp</a>
-                    <a href="#" target="_blank">📧 Email</a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h4>Quick Links</h4>
-                <a href="#home">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
-            </div>
-            <div class="footer-contact">
-                <h4>Get in Touch</h4>
-                <p>📧 brightsolutions.tech.ng@gmail.com</p>
-                <p>📍 Awka, Anambra State, Nigeria</p>
-                <p>📞 <a href="https://wa.me/2347072980690">+234 707 298 0690</a></p>
+                <p>
+                    Modern surveillance systems with HD CCTV cameras,
+                    remote monitoring and complete security installation
+                    services for homes, offices and businesses.
+                </p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 Bright Digital Solutions. All Rights Reserved. 🇳🇬</p>
+
+    </div>
+
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+
+    <h2 class="section-title">Our Impact</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat">
+            <h2 class="counter" data-target="150">0</h2>
+            <p>Projects Completed</p>
         </div>
-    </footer>
 
-    <script>
-        // Form success handler
-        if (window.location.href.includes('success=true')) {
-            document.getElementById('form-success').style.display = 'block';
-            document.getElementById('contact-form').style.display = 'none';
-            window.history.replaceState({}, document.title, window.location.pathname + '#contact');
-        }
+        <div class="stat">
+            <h2 class="counter" data-target="98">0</h2>
+            <p>Happy Clients</p>
+        </div>
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        <div class="stat">
+            <h2 class="counter" data-target="24">0</h2>
+            <p>Expert Team Members</p>
+        </div>
 
-        // Back to top
-        const backToTopBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        <div class="stat">
+            <h2 class="counter" data-target="7">0</h2>
+            <p>Years Experience</p>
+        </div>
 
-        // Stats counter
-        const statNumbers = document.querySelectorAll('.stat-number');
-        let animated = false;
-        function animateStats() {
-            if (animated) return;
-            const statsSection = document.querySelector('.stats');
-            const rect = statsSection.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100) {
-                animated = true;
-                statNumbers.forEach(el => {
-                    const target = parseInt(el.getAttribute('data-target'));
-                    let current = 0;
-                    const increment = target / 50;
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            el.textContent = target;
-                            clearInterval(timer);
-                        } else {
-                            el.textContent = Math.floor(current);
-                        }
-                    }, 30);
-                });
-            }
-        }
-        window.addEventListener('scroll', animateStats);
-        animateStats();
+    </div>
 
-        // Fade-in on scroll
-        const fadeElements = document.querySelectorAll('.card, .gallery-item, .stat-item');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-        fadeElements.forEach(el => observer.observe(el));
-    </script>
+</section>
 
-</body>
+<!-- PROJECTS -->
+<section id="projects">
 
-                        </html>
+    <h2 class="section-title">Projects Gallery</h2>
+
+    <div class="gallery-grid">
+
+        <!-- 1 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
+                alt="Computer screen with website project">
+
+            <div class="gallery-overlay">
+                💻 E-commerce Website Design
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop"
+                alt="Laptop showing programming code">
+
+            <div class="gallery-overlay">
+                ⚙️ Software Engineering System
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=1200&auto=format&fit=crop"
+                alt="Solar panels installed on roof">
+
+            <div class="gallery-overlay">
+                ☀️ Rooftop Solar Installation
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?q=80&w=1200&auto=format&fit=crop"
+                alt="Security CCTV camera mounted on wall">
+
+            <div class="gallery-overlay">
+                📹 CCTV Security Setup
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=1200&auto=format&fit=crop"
+                alt="Another rooftop solar project">
+
+            <div class="gallery-overlay">
+                ☀️ Commercial Solar Project
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="gallery-item fade-item">
+            <img
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
+                alt="Person typing on laptop">
+
+            <div class="gallery-overlay">
+                💻 Web & Software Development
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+
+    <h2 class="section-title">Contact Us</h2>
+
+    <div class="contact-wrapper">
+
+        <div class="contact-info">
+
+            <h3>Bright Digital Solutions (BDS)</h3>
+
+            <p>
+                Bridging Digital Innovation & Physical Security
+            </p>
+
+            <p>
+                📍 Awka, Anambra State, Nigeria
+            </p>
+
+            <p>
+                📞 +234 707 298 0690
+            </p>
+
+            <p>
+                📧 brightsolutions.tech.ng@gmail.com
+            </p>
+
+            <p>
+                🏢 Founded in 2020
+            </p>
+
+        </div>
+
+        <div class="contact-form">
+
+            <!-- SUCCESS MESSAGE -->
+            <div class="success-message" id="successMessage">
+                ✅ Message sent successfully! We'll get back to you shortly.
+            </div>
+
+            <!-- NETLIFY FORM -->
+            <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                action="/?success=true#contact"
+                id="contactForm">
+
+                <input type="hidden" name="form-name" value="contact">
+
+                <p hidden>
+        
