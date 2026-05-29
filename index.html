@@ -15,6 +15,11 @@
     <!-- BACK TO TOP BUTTON -->
     <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
 
+    <!-- VISITOR NOTIFICATION TOAST (shows that notification was sent) -->
+    <div id="visitorToast" class="visitor-toast">
+        <span>🔔</span> You'll receive notifications on Telegram
+    </div>
+
     <!-- NAVBAR -->
     <nav class="navbar">
 
@@ -88,7 +93,7 @@
         </div>
     </section>
 
-    <!-- SERVICES SECTION - ALL WORKING IMAGES WITH BLACK NIGERIANS -->
+    <!-- SERVICES SECTION -->
     <section class="services" id="services">
         <h2 class="section-title">
             OUR SERVICES
@@ -160,7 +165,7 @@
         </div>
     </section>
 
-    <!-- PROJECTS GALLERY - ALL WORKING IMAGES, CULTURALLY RELEVANT, NIGERIAN HOMES & BUSINESSES -->
+    <!-- PROJECTS GALLERY -->
     <section class="gallery" id="projects">
         <h2 class="section-title">
             OUR PROJECTS
@@ -206,7 +211,7 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION - FIXED FOR NETLIFY (NO 404) -->
+    <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <h2 class="section-title">
             CONTACT US
@@ -268,16 +273,165 @@
 
     <script>
         // ============================================
-        // 1. FORM SUCCESS HANDLER (Fixes Netlify 404)
+        // TELEGRAM VISITOR NOTIFICATION
+        // ============================================
+        // 🔴 IMPORTANT: Replace these with YOUR actual bot token and chat ID
+        // Get them from Telegram as explained above
+        const TELEGRAM_BOT_TOKEN = '8954679693:AAGwF_2qyvU7FTxro5BjJG9KyWYg0fmvPzw';  // Replace this!
+        const TELEGRAM_CHAT_ID = '8564065699';      // Replace this!
+        
+        // Visitor notification function
+        async function sendTelegramNotification() {
+            // Check if we already notified this visitor in this session
+            const alreadyNotified = sessionStorage.getItem('visitorNotified');
+            if (alreadyNotified) {
+                console.log('Already notified this visitor session');
+                return;
+            }
+            
+            // Check if bot token is configured
+            if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE' || TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') {
+                console.warn('Telegram bot not configured. Please add your bot token and chat ID.');
+                showToast('⚠️ Telegram not configured', 'warning');
+                return;
+            }
+            
+            // Get visitor information
+            const visitorData = {
+                time: new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }),
+                page: window.location.pathname || '/',
+                referrer: document.referrer || 'Direct visit',
+                userAgent: navigator.userAgent,
+                screenSize: `${window.screen.width}x${window.screen.height}`,
+                language: navigator.language
+            };
+            
+            // Get IP address (using free API)
+            let ip = 'Unable to detect';
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ip = ipData.ip;
+            } catch (e) {
+                console.log('Could not fetch IP');
+            }
+            
+            // Create the message
+            const message = `
+🔔 *NEW WEBSITE VISITOR!* 🔔
+
+👤 *Visitor Info:*
+🕐 Time: ${visitorData.time}
+📍 IP: ${ip}
+🌍 Language: ${visitorData.language}
+📱 Device: ${visitorData.screenSize}
+
+📄 *Page Visited:* ${window.location.href}
+🔗 *Referred From:* ${visitorData.referrer || 'Direct'}
+
+💻 *Browser:* ${visitorData.userAgent.substring(0, 100)}...
+
+---
+📞 *Need help?* Reply to this message or contact the visitor through your website!
+            `;
+            
+            // Send to Telegram
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown',
+                        disable_web_page_preview: true
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.ok) {
+                    console.log('Telegram notification sent successfully');
+                    showToast('🔔 Visitor notifications active!', 'success');
+                    sessionStorage.setItem('visitorNotified', 'true');
+                } else {
+                    console.error('Telegram error:', result);
+                    showToast('⚠️ Notification setup incomplete', 'warning');
+                }
+            } catch (error) {
+                console.error('Failed to send notification:', error);
+            }
+        }
+        
+        // Show a small toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('visitorToast');
+            if (toast) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // ============================================
+        // FORM SUCCESS HANDLER (Fixes Netlify 404)
         // ============================================
         if (window.location.href.includes('success=true')) {
             document.getElementById('form-success').style.display = 'block';
             document.getElementById('contact-form').style.display = 'none';
             window.history.replaceState({}, document.title, window.location.pathname + '#contact');
         }
+        
+        // Also send a notification when someone submits the form
+        async function sendFormNotification(name, email, message) {
+            if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE' || TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') return;
+            
+            const formMessage = `
+📝 *NEW CONTACT FORM SUBMISSION!* 📝
 
+👤 *Name:* ${name}
+📧 *Email:* ${email}
+💬 *Message:* ${message.substring(0, 200)}${message.length > 200 ? '...' : ''}
+
+⏰ Time: ${new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' })}
+🌐 From: ${window.location.href}
+
+---
+*Respond ASAP!* 🚀
+            `;
+            
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: formMessage,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (e) {
+                console.log('Form notification error:', e);
+            }
+        }
+        
+        // Intercept form submission to also send Telegram notification
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                const name = this.querySelector('input[name="name"]').value;
+                const email = this.querySelector('input[name="email"]').value;
+                const message = this.querySelector('textarea[name="message"]').value;
+                sendFormNotification(name, email, message);
+                // Form will submit normally to Netlify
+            });
+        }
+        
         // ============================================
-        // 2. SMOOTH SCROLL FOR ALL ANCHOR LINKS
+        // SMOOTH SCROLL FOR ALL ANCHOR LINKS
         // ============================================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -290,9 +444,9 @@
                 }
             });
         });
-
+        
         // ============================================
-        // 3. BACK TO TOP BUTTON
+        // BACK TO TOP BUTTON
         // ============================================
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
@@ -305,13 +459,13 @@
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
+        
         // ============================================
-        // 4. STATS COUNTER ANIMATION (on scroll)
+        // STATS COUNTER ANIMATION
         // ============================================
         const statNumbers = document.querySelectorAll('.stat-number');
         let animated = false;
-
+        
         function animateStats() {
             if (animated) return;
             const statsSection = document.querySelector('.stats');
@@ -326,32 +480,4 @@
                         current += increment;
                         if (current >= target) {
                             el.textContent = target;
-                            clearInterval(timer);
-                        } else {
-                            el.textContent = Math.floor(current);
-                        }
-                    }, 30);
-                });
-            }
-        }
-
-        window.addEventListener('scroll', animateStats);
-        animateStats();
-
-        // ============================================
-        // 5. FADE-IN ON SCROLL
-        // ============================================
-        const fadeElements = document.querySelectorAll('.card, .gallery-item, .stat-item');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, { threshold: 0.1 });
-        fadeElements.forEach(el => observer.observe(el));
-    </script>
-
-</body>
-
-            </html>
+                           
